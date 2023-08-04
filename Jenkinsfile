@@ -6,7 +6,7 @@ pipeline {
 
         stage('Checkout SCM') {
             steps {
-                sh 'echo Salam Dunya 01'
+                sh 'echo Salam Dunya 01Selam dunya'
             }
         }
 
