@@ -11,6 +11,7 @@ pipeline {
         }
 
         stage('Build') {
+
             steps {
                 sh 'echo Salam Dunya'
             }
