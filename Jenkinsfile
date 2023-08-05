@@ -29,33 +29,22 @@ pipeline {
             }
         }
 
-        stage('Initialize'){
+
+        stage('Build docker image') {
             steps {
                 script {
                     def dockerHome = tool 'myDocker'
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
-                }
-            }
-        }
-        stage('Build docker image') {
-            steps {
-                script {
                     sh 'docker build -t abbas1997/testImage .'
                 }
             }
         }
 
-         stage('Initialize2'){
+        stage('Push image to dockerHub') {
             steps {
                 script {
                     def dockerHome = tool 'myDocker'
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
-                }
-            }
-         }
-        stage('Push image to dockerHub') {
-            steps {
-                script {
                     withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'dockerHubPwd')]) {
                         sh 'docker login -u abbas1997 -p ${dockerHubPwd}'
                     }
