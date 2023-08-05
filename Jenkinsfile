@@ -28,20 +28,21 @@ pipeline {
             }
         }
 
-        stage('Back-end') {
-            agent {
-                docker { image 'maven:3.9.3-eclipse-temurin-17-alpine' }
-            }
+        stage('Build docker image') {
             steps {
-                sh 'mvn --version'
+                script {
+                    sh 'docker build -t abbas1997/testImage .'
+                }
             }
         }
-        stage('Front-end') {
-            agent {
-                docker { image 'node:18.17.0-alpine3.18' }
-            }
+        stage('Push image to dockerHub') {
             steps {
-                sh 'node --version'
+                script {
+                    withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'dockerHubPwd')]) {
+                        sh 'docker login -u abbas1997 -p ${dockerHubPwd}'
+                    }
+                    sh 'docker push abbas1997/testImage'
+                }
             }
         }
 
