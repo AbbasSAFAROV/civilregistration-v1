@@ -35,9 +35,7 @@ pipeline {
         stage('Build docker image') {
             steps {
                 script {
-                    def dockerHome = tool 'myDocker'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
-                    sh 'docker build -t abbas1997/testImage .'
+                    sh 'docker build -t abbas1997/testimagev1 .'
                 }
             }
         }
@@ -45,12 +43,10 @@ pipeline {
         stage('Push image to dockerHub') {
             steps {
                 script {
-                    def dockerHome = tool 'myDocker'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
                     withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'dockerHubPwd')]) {
                         sh 'docker login -u abbas1997 -p ${dockerHubPwd}'
                     }
-                    sh 'docker push abbas1997/testImage'
+                    sh 'docker push abbas1997/testimagev1'
                 }
             }
         }
