@@ -2,7 +2,7 @@ pipeline {
 
     agent any
     tools {
-        maven 'maven_3_5_0'
+        maven 'Maven 3.3.9'
     }
 
     stages {
@@ -16,7 +16,7 @@ pipeline {
         stage('Build') {
 
             steps {
-                sh 'echo Salam Dunya'
+                sh 'mvn clean install'
             }
         }
 
